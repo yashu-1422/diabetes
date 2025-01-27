@@ -45,7 +45,7 @@ input_df = user_input_features()
 
 data = pd.read_csv('diabetes_prediction_dataset.csv')
 
-# Preprocess the dataset
+# Fit LabelEncoder on the entire dataset
 label_encoder = LabelEncoder()
 data['gender'] = label_encoder.fit_transform(data['gender'])
 data['smoking_history'] = label_encoder.fit_transform(data['smoking_history'])
@@ -56,7 +56,7 @@ y = data['diabetes']
 # Splitting the dataset
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Preprocess user input (make sure 'gender' and 'smoking_history' are encoded properly)
+# Preprocess user input (ensure that gender and smoking_history are transformed correctly)
 input_df['gender'] = label_encoder.transform(input_df['gender'])
 input_df['smoking_history'] = label_encoder.transform(input_df['smoking_history'])
 
