@@ -45,20 +45,27 @@ input_df = user_input_features()
 
 data = pd.read_csv('diabetes_prediction_dataset.csv')
 
-# Fit LabelEncoder on the entire dataset
+# Fit LabelEncoder on the entire dataset and user input
 label_encoder = LabelEncoder()
-data['gender'] = label_encoder.fit_transform(data['gender'])
-data['smoking_history'] = label_encoder.fit_transform(data['smoking_history'])
+
+# Combine the 'gender' and 'smoking_history' columns from both training data and user input
+combined_gender = np.concatenate([data['gender'].values, input_df['gender'].values])
+combined_smoking_history = np.concatenate([data['smoking_history'].values, input_df['smoking_history'].values])
+
+# Fit the label encoder on the combined values
+label_encoder.fit(combined_gender)
+data['gender'] = label_encoder.transform(data['gender'])
+input_df['gender'] = label_encoder.transform(input_df['gender'])
+
+label_encoder.fit(combined_smoking_history)
+data['smoking_history'] = label_encoder.transform(data['smoking_history'])
+input_df['smoking_history'] = label_encoder.transform(input_df['smoking_history'])
 
 X = data.drop('diabetes', axis=1)
 y = data['diabetes']
 
 # Splitting the dataset
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# Preprocess user input (ensure that gender and smoking_history are transformed correctly)
-input_df['gender'] = label_encoder.transform(input_df['gender'])
-input_df['smoking_history'] = label_encoder.transform(input_df['smoking_history'])
 
 # Model selection
 st.sidebar.header("Choose Model")
