@@ -42,8 +42,8 @@ def user_input_features():
 input_df = user_input_features()
 
 # Load dataset
-
-data = pd.read_csv('diabetes_prediction_dataset.csv')
+data_url = '/mnt/data/diabetes_prediction_dataset.csv'
+data = pd.read_csv(data_url)
 
 # Preprocess the dataset
 label_encoder = LabelEncoder()
@@ -56,7 +56,7 @@ y = data['diabetes']
 # Splitting the dataset
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Preprocess user input
+# Preprocess user input (make sure 'gender' and 'smoking_history' are encoded properly)
 input_df['gender'] = label_encoder.transform(input_df['gender'])
 input_df['smoking_history'] = label_encoder.transform(input_df['smoking_history'])
 
