@@ -42,8 +42,8 @@ def user_input_features():
 input_df = user_input_features()
 
 # Load dataset
-data_url = '/mnt/data/diabetes_prediction_dataset.csv'
-data = pd.read_csv(data_url)
+
+data = pd.read_csv('diabetes_prediction_dataset.csv')
 
 # Preprocess the dataset
 label_encoder = LabelEncoder()
